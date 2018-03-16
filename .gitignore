@@ -1,4 +1,5 @@
 *.swp
 composer.lock
-
-/vendor/
+composer.phar
+vendor
+.idea
