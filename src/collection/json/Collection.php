@@ -33,11 +33,17 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
     }
 
     public function sort() {
-        uasort($this->elements, function($a, $b) { return ($this->class)::compare($a, $b); });
+        if ( method_exists($this->class, 'compare') )
+            uasort($this->elements, function($a, $b) { return ($this->class)::compare($a, $b); });
+        else
+            ksort($this->elements);
     }
 
     public function reverse_sort() {
-        uasort($this->elements, function($a, $b) { return ($this->class)::compare($b, $a); });
+        if ( method_exists($this->class, 'compare') )
+            uasort($this->elements, function($a, $b) { return ($this->class)::compare($b, $a); });
+        else
+            krsort($this->elements);
     }
 
     public function count() : int {
