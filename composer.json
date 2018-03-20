@@ -18,5 +18,12 @@
         "psr-4" : {
             "edwrodrig\\contento\\" : "src/"
         }
+    },
+    "archive" : {
+        "exclude" : [
+            ".idea",
+            ".gitignore",
+            "phpunit.xml.dist"
+        ]
     }
 }
