@@ -48,8 +48,6 @@ class DateDuration
             throw new exception\InvalidDateDurationException($start, $end);
     }
 
-
-
     public function to_array() : array {
         return [
             'start' => $this->start,
