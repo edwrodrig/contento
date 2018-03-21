@@ -18,9 +18,12 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
     private $elements;
     private $class;
 
-    protected function __construct(array $data, string $class) {
-        $this->class = $class;
+    protected function __construct() {
         $this->elements = [];
+    }
+
+    protected function from_array(array $data, string $class) {
+        $this->class = $class;
 
         foreach ( $data as $element ) {
             $element_object = $class::create_from_array($element);
@@ -76,8 +79,19 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
         throw new \ErrorException('You can\'t unset a value');
     }
 
+    public static function create_from_elements(array $elements) : self {
+        $r = new self;
+        foreach ( $elements as $element ) {
+            $r->elements[$element->get_id()] = $element;
+        }
+
+        return $r;
+    }
+
     public static function create_from_array(array $elements, string $class) : self {
-        return new self($elements, $class);
+        $r = new self;
+        $r->from_array($elements, $class);
+        return $r;
     }
 
     public static function create_from_json(string $filename, string $class) : self {
