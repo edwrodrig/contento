@@ -56,4 +56,52 @@ class DateDuration
             'end' => $this->end
         ];
     }
+
+    public function has_started(?DateTime $now = null) : bool {
+        if ( is_null($now) )
+            $now = new DateTime;
+        if ( is_null($this->start) )
+            return true;
+        return $this->start < $now;
+    }
+
+    public function has_finished(?DateTime $now = null) : bool {
+        if ( is_null($now) )
+            $now = new DateTime;
+
+        if ( is_null($this->end) )
+            return false;
+
+        return $this->end < $now;
+    }
+
+    public function is_active(?DateTime $now = null) : bool {
+        if ( is_null($now) )
+            $now = new DateTime;
+
+        return $this->has_started($now) && !$this->has_finished($now);
+    }
+
+    public static function compare(DateDuration $a, DateDuration $b)
+    {
+        $a1 = is_null($a->start) ? PHP_INT_MIN : $a->start->getTimestamp();
+        $a2 = is_null($a->end) ? PHP_INT_MAX : $a->end->getTimestamp();
+
+        $b1 = is_null($b->start) ? PHP_INT_MIN : $b->start->getTimestamp();
+        $b2 = is_null($b->end) ? PHP_INT_MAX : $b->end->getTimestamp();
+
+        if ( $a2 < $b1 ) return 1;
+        if ( $b2 < $a1 ) return -1;
+
+        if ( $a2 < $b2 ) return 1;
+        if ( $b2 < $a2 ) return -1;
+
+        if ( $a1 < $b1 ) return 1;
+        if ( $b1 < $a1 ) return -1;
+
+        return 0;
+    }
+
+
+
 }
