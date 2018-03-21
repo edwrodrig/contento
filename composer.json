@@ -23,7 +23,9 @@
         "exclude" : [
             ".idea",
             ".gitignore",
-            "phpunit.xml.dist"
+            "phpunit.xml.dist",
+            "contento",
+            "tests"
         ]
     }
 }
