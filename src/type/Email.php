@@ -26,4 +26,12 @@ class Email
         $this->mail = $mail;
 
     }
+
+    public function get_domain() : string {
+        return explode('@', $this->mail)[1];
+    }
+
+    public function __toString() : string {
+        return $this->mail;
+    }
 }

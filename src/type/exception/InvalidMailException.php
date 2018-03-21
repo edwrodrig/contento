@@ -9,15 +9,8 @@
 namespace edwrodrig\contento\type\exception;
 
 
-class InvalidMailException extends \Exception
-{
+use Exception;
 
-    /**
-     * InvalidMailException constructor.
-     * @param bool $mail
-     */
-    public function __construct($mail)
-    {
-        parent::__construct($mail);
-    }
+class InvalidMailException extends Exception
+{
 }

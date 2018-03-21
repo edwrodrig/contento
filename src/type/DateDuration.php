@@ -7,6 +7,7 @@
  */
 
 namespace edwrodrig\contento\type;
+use DateTime;
 
 /**
  * Class DateDuration
@@ -33,10 +34,11 @@ class DateDuration
 
     /**
      * DateDuration constructor.
-     * @param Date|null $start
-     * @param Date|null $end
+     * @param DateTime|null $start
+     * @param DateTime|null $end
+     * @throws exception\InvalidDateDurationException
      */
-    public function __construct(Date $start = null, Date $end = null) {
+    public function __construct(?DateTime $start = null, ?DateTime $end = null) {
         $this->start = $start;
         $this->end = $end;
 

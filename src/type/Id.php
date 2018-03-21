@@ -26,6 +26,10 @@ class Id implements JsonSerializable
 
     }
 
+    public function __toString() : string {
+        return $this->id;
+    }
+
     public function jsonSerialize() {
         return $this->id;
     }

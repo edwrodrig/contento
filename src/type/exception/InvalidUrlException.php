@@ -13,13 +13,4 @@ use Exception;
 
 class InvalidUrlException extends Exception
 {
-
-    /**
-     * InvalidUrlException constructor.
-     * @param string $url
-     */
-    public function __construct($url)
-    {
-        parent::__construct($url);
-    }
 }

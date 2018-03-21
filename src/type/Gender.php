@@ -32,7 +32,7 @@ class Gender
     /**
      * @var string|null
      */
-    public $gender;
+    private $gender;
 
     /**
      * Gender constructor.
@@ -46,6 +46,10 @@ class Gender
         if ( self::MALE == $gender);
         else if ( self::FEMALE == $gender );
         else throw new exception\InvalidGenderException($gender);
+    }
+
+    public function __toString() : string {
+        return $this->gender;
     }
 
     public function jsonSerialize() {

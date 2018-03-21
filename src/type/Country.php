@@ -16,15 +16,22 @@ namespace edwrodrig\contento\type;
  */
 class Country
 {
+    /**
+     * @var string
+     */
     private $country;
 
-    public function __construct(string $country) {
+    public function __construct(string $country)
+    {
         $this->country = $country;
     }
 
-    public function __toString() : string {
+    public function __toString(): string
+    {
         return $this->country;
     }
+}
+
 /**
  * [
 {
@@ -1829,4 +1836,3 @@ class Country
 ]
 
  */
-}

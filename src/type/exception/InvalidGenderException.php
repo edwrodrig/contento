@@ -13,13 +13,4 @@ use Exception;
 
 class InvalidGenderException extends Exception
 {
-
-    /**
-     * InvalidGenderException constructor.
-     * @param null|string $gender
-     */
-    public function __construct($gender)
-    {
-        parent::__construct($gender);
-    }
 }

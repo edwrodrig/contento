@@ -13,13 +13,4 @@ use Exception;
 
 class InvalidDoiException extends Exception
 {
-
-    /**
-     * InvalidDoiException constructor.
-     * @param string $doi
-     */
-    public function __construct(string $doi)
-    {
-        parent::__construct($doi);
-    }
 }
