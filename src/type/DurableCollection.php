@@ -23,7 +23,7 @@ trait DurableCollection
     }
 
     public function sort() {
-        usort($this->elements, function($a, $b) { $a::compare($a, $b); });
+        usort($this->elements, function($a, $b) { DateDuration::compare($a->get_duration(), $b->get_duration()); });
     }
 
     public function get_active_elements($now = null) {
