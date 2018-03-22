@@ -50,6 +50,20 @@ trait DurableCollection
         return $copy;
     }
 
+    public function get_started_elements($now = null) {
+        $copy = clone $this;
+        $copy->elements = [];
+
+        foreach ( $this->elements as $element ) {
+            if ( $element->get_duration()->has_started($now) ) {
+                $copy->elements[] = $element;
+            }
+        }
+        return $copy;
+    }
+
+
+
     public function offsetExists($offset) : bool {
         $count = count($this->elements);
         if ( $offset < 0 )
