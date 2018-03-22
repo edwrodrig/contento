@@ -55,38 +55,60 @@ class DateDuration
         ];
     }
 
-    public function has_started(?DateTime $now = null) : bool {
+    public function has_started($now = null) : bool {
         if ( is_null($now) )
             $now = new DateTime;
-        if ( is_null($this->start) )
-            return true;
-        return $this->start < $now;
+        
+        if ( $now instanceof DateTime )
+            $now = $now->getTimestamp();
+        else if ( $now instanceof DateDuration )
+            $now = $now->get_end_timestamp();
+        
+        return $this->get_start_timestamp() < $now;
+            
     }
 
-    public function has_finished(?DateTime $now = null) : bool {
-        if ( is_null($now) )
-            $now = new DateTime;
-
-        if ( is_null($this->end) )
-            return false;
-
-        return $this->end < $now;
-    }
-
-    public function is_active(?DateTime $now = null) : bool {
+    public function has_finished($now = null) : bool {
         if ( is_null($now) )
             $now = new DateTime;
 
-        return $this->has_started($now) && !$this->has_finished($now);
+        if ( $now instanceof DateTime )
+            $now = $now->getTimestamp();
+        else if ( $now instanceof DateDuration )
+            $now = $now->get_end_timestamp();
+
+        return $this->get_end_timestamp() < $now;
+
+    }
+    
+    public function is_active($now = null) : bool {
+        if ( is_null($now) )
+            $now = new DateTime;
+
+        if ( $now instanceof DateTime )
+            return $this->has_started($now) && !$this->has_finished($now);
+
+        if ( $now instanceof DateDuration )
+            return $this->has_started($now->get_end_timestamp()) && !$this->has_finished($now->get_start_timestamp());
+
+        return false;
     }
 
+    public function get_start_timestamp() : int {
+        return is_null($this->start) ? PHP_INT_MIN : $this->start->getTimestamp();
+    }
+
+    public function get_end_timestamp() : int {
+        return is_null($this->end) ? PHP_INT_MAX : $this->end->getTimestamp();
+    }
+    
     public static function compare(DateDuration $a, DateDuration $b)
     {
-        $a1 = is_null($a->start) ? PHP_INT_MIN : $a->start->getTimestamp();
-        $a2 = is_null($a->end) ? PHP_INT_MAX : $a->end->getTimestamp();
+        $a1 = $a->get_start_timestamp();
+        $a2 = $a->get_end_timestamp();
 
-        $b1 = is_null($b->start) ? PHP_INT_MIN : $b->start->getTimestamp();
-        $b2 = is_null($b->end) ? PHP_INT_MAX : $b->end->getTimestamp();
+        $b1 = $b->get_start_timestamp();
+        $b2 = $b->get_end_timestamp();
 
         if ( $a2 < $b1 ) return 1;
         if ( $b2 < $a1 ) return -1;
