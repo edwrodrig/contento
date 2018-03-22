@@ -94,6 +94,14 @@ class DateDuration
         return false;
     }
 
+    public function get_start() : ?DateTime {
+        return $this->start;
+    }
+
+    public function get_end() : ?DateTime {
+        return $this->end;
+    }
+
     public function get_start_timestamp() : int {
         return is_null($this->start) ? PHP_INT_MIN : $this->start->getTimestamp();
     }

@@ -57,6 +57,8 @@ class DateDurationTest extends \PHPUnit\Framework\TestCase
             [true, ['1990-01-01', '2000-01-01'], self::create_duration('1999-01-01', '2001-01-01')],
             [true, ['1990-01-01', '2000-01-01'], self::create_duration('1989-01-01', '2001-01-01')],
             [false, ['1990-01-01', '2000-01-01'], self::create_duration('2001-01-01', '2002-01-01')],
+            [true, ['1900-01-01', '2000-01-01'], self::create_date('1950-01-01')],
+            [false, ['1900-01-01', '2000-01-01'], self::create_date('2010-01-01')],
         ];
     }
 
@@ -71,7 +73,5 @@ class DateDurationTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals($expected, $duration_1->is_active($b));
     }
-
-
 
 }

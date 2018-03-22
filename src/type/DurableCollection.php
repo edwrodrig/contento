@@ -27,7 +27,7 @@ trait DurableCollection
     }
 
     public function get_active_elements($now = null) {
-        $copy = clone self;
+        $copy = clone $this;
         $copy->elements = [];
 
         foreach ( $this->elements as $element ) {
@@ -39,7 +39,7 @@ trait DurableCollection
     }
 
     public function get_finished_elements($now = null) {
-        $copy = clone self;
+        $copy = clone $this;
         $copy->elements = [];
 
         foreach ( $this->elements as $element ) {
@@ -50,5 +50,27 @@ trait DurableCollection
         return $copy;
     }
 
+    public function offsetExists($offset) : bool {
+        $count = count($this->elements);
+        if ( $offset < 0 )
+            return isset($this->elements[$count + $offset]);
+        else
+            return isset($this->elements[$offset]);
+    }
 
+    public function offsetGet($offset) {
+        $count = count($this->elements);
+        if ( $offset < 0 )
+            return $this->elements[$count + $offset];
+        else
+            return $this->elements[$offset];
+    }
+
+    public function offsetSet($offset, $value) {}
+
+    public function offsetUnset($offset) {}
+
+    public function count() : int {
+        return count($this->elements);
+    }
 }
