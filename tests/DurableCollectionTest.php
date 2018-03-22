@@ -23,6 +23,8 @@ class DurableCollectionTest extends \PHPUnit\Framework\TestCase
                     self::create_date('1920-01-01', '1930-01-01'),
                     self::create_date('1930-01-01', '1940-01-01'),
                 ];
+
+                $this->sort();
             }
 
             public static function create_date(string $a, string $b) {
