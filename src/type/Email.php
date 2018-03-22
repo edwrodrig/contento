@@ -20,7 +20,7 @@ class Email
      */
     public function __construct(string $mail)
     {
-        if ( $mail = filter_var($mail, FILTER_VALIDATE_EMAIL) === FALSE )
+        if ( filter_var($mail, FILTER_VALIDATE_EMAIL) === FALSE )
             throw new exception\InvalidMailException($mail);
 
         $this->mail = $mail;
