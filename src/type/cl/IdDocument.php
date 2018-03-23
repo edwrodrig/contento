@@ -13,6 +13,11 @@ namespace edwrodrig\contento\type\cl;
  */
 use JsonSerializable;
 
+
+/**
+ * @contento_label_es documento de identificación
+ * @contento_label_en identification document
+ */
 class IdDocument implements JsonSerializable
 {
 

@@ -10,6 +10,10 @@ namespace edwrodrig\contento\type;
 
 use JsonSerializable;
 
+/**
+ * @contento_label_es id
+ * @contento_label_en id
+ */
 class Id implements JsonSerializable
 {
     private $id;

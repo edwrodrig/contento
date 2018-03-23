@@ -8,7 +8,12 @@
 
 namespace edwrodrig\contento\type;
 
-
+/**
+ * Class Doi
+ * @package edwrodrig\contento\type
+ * @contento_label_es Doi
+ * @contento_label_en Doi
+ */
 class Doi implements \JsonSerializable
 {
     private $doi;

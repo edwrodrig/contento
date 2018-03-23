@@ -8,7 +8,12 @@
 
 namespace edwrodrig\contento\type;
 
-
+/**
+ * Class Email
+ * @package edwrodrig\contento\type
+ * @contento_label_es correo electrónico
+ * @contento_label_en email
+ */
 class Email
 {
     private $mail;
