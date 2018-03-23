@@ -43,7 +43,7 @@ class IdDocumentType implements JsonSerializable
     /**
      * Type constructor.
      * @param string $type
-     * @throws exception\InvalidIdDocumentTypeErrorException
+     * @throws exception\InvalidIdDocumentTypeException
      */
     public function __construct(string $type) {
 
@@ -52,7 +52,7 @@ class IdDocumentType implements JsonSerializable
         if ( self::RUT == $type);
         else if ( self::PP == $type );
         else if ( self::OTHER == $type );
-        else throw new exception\InvalidIdDocumentTypeErrorException($type);
+        else throw new exception\InvalidIdDocumentTypeException($type);
     }
 
     public function __toString() : string {

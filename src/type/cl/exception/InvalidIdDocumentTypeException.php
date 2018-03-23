@@ -11,6 +11,6 @@ namespace edwrodrig\contento\type\cl\exception;
 
 use Exception;
 
-class InvalidIdDocumentTypeErrorException extends Exception
+class InvalidIdDocumentTypeException extends Exception
 {
 }

@@ -43,7 +43,7 @@ class IdDocument implements JsonSerializable
     /**
      * @param array $data
      * @throws exception\InvalidIdDocumentNumberException
-     * @throws exception\InvalidIdDocumentTypeErrorException
+     * @throws exception\InvalidIdDocumentTypeException
      */
     public function from_array(array $data) {
         $this->type = new IdDocumentType($data['type'] ?? '');
