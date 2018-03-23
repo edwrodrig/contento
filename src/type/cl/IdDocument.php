@@ -20,27 +20,8 @@ use JsonSerializable;
  */
 class IdDocument implements JsonSerializable
 {
-
     /**
-     * @contento_label_es rut
-     * @contento_label_en rut
-     */
-    const RUT = 'rut';
-
-    /**
-     * @contento_label_es pasaporte
-     * @contento_label_en passport
-     */
-    const PP = 'pp';
-
-    /**
-     * @contento_label_es otro
-     * @contento_label_en other
-     */
-    const OTHER = 'other';
-
-    /**
-     * @var string
+     * @var IdDocumentType
      * @contento_label_es tipo
      * @contento_label_en type
      */
@@ -65,22 +46,9 @@ class IdDocument implements JsonSerializable
      * @throws exception\InvalidIdDocumentTypeErrorException
      */
     public function from_array(array $data) {
-        $this->type = $data['type'] ?? null;
-        if ( is_null($this->type) || !in_array($this->type, [self::RUT, self::PP, self::OTHER]) )
-            throw new exception\InvalidIdDocumentTypeErrorException($this->type ?? '');
+        $this->type = new IdDocumentType($data['type'] ?? '');
 
-        $this->number = trim($data['number'] ?? '');
-        $this->number = strtolower($this->number);
-
-        if ( strlen($this->number) < 4 )
-            throw new exception\InvalidIdDocumentNumberException($this->number);
-
-        if ( $this->type == 'rut' ) {
-            $this->number = str_replace('.', '', $this->number);
-            if ( !preg_match('/\d+-[\dk]/', $this->number) ) {
-                throw new exception\InvalidIdDocumentNumberException($this->number);
-            }
-        }
+        $this->number = $this->type->validate($data['number'] ?? '');
     }
 
     public function to_array() : array {
@@ -90,7 +58,7 @@ class IdDocument implements JsonSerializable
         ];
     }
 
-    public function get_type() : string {
+    public function get_type() : IdDocumentType {
         return $this->type;
     }
 

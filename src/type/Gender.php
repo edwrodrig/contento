@@ -33,7 +33,7 @@ class Gender implements JsonSerializable
     const FEMALE = 'f';
 
     /**
-     * @var string|null
+     * @var string
      */
     private $gender;
 

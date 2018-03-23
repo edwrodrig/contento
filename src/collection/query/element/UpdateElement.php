@@ -34,7 +34,7 @@ SQL;
     public function set(Element $element) {
         $this->element = $element;
         $this
-            ->b('id_element', $element->get_id())
+            ->b('id_element', strval($element->get_id()))
             ->b('collection', $element->get_collection())
             ->b('data', json_encode($element));
 
