@@ -6,7 +6,10 @@
  * Time: 13:31
  */
 
+
 namespace edwrodrig\contento\type;
+
+use JsonSerializable;
 
 /**
  * Class Gender
@@ -14,7 +17,7 @@ namespace edwrodrig\contento\type;
  * @contento_label_es género
  * @contento_label_en gender
  */
-class Gender
+class Gender implements JsonSerializable
 {
 
     /**

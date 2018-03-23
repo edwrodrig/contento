@@ -7,6 +7,8 @@
  */
 
 namespace edwrodrig\contento\type;
+use JsonSerializable;
+
 
 /**
  * Class Email
@@ -14,7 +16,7 @@ namespace edwrodrig\contento\type;
  * @contento_label_es correo electrónico
  * @contento_label_en email
  */
-class Email
+class Email implements JsonSerializable
 {
     private $mail;
 

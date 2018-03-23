@@ -8,8 +8,9 @@
 
 namespace edwrodrig\contento\type;
 
+use JsonSerializable;
 
-class Reference implements \JsonSerializable
+class Reference implements JsonSerializable
 {
     private $ref;
 

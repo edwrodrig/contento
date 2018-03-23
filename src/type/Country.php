@@ -7,6 +7,7 @@
  */
 
 namespace edwrodrig\contento\type;
+use JsonSerializable;
 
 /**
  * Class Country
