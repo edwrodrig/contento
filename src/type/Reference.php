@@ -9,7 +9,7 @@
 namespace edwrodrig\contento\type;
 
 
-class Reference
+class Reference implements \JsonSerializable
 {
     private $ref;
 
@@ -26,5 +26,9 @@ class Reference
 
     public function get_type() : string {
         return $this->type;
+    }
+
+    public function jsonSerialize() {
+        return $this->ref;
     }
 }

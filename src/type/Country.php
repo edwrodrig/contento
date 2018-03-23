@@ -14,7 +14,7 @@ namespace edwrodrig\contento\type;
  * @contento_label_es país
  * @contento_label_en country
  */
-class Country
+class Country implements JsonSerializable
 {
     /**
      * @var string
@@ -28,6 +28,10 @@ class Country
 
     public function __toString(): string
     {
+        return $this->country;
+    }
+
+    public function jsonSerialize() {
         return $this->country;
     }
 }

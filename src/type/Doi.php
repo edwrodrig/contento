@@ -9,7 +9,7 @@
 namespace edwrodrig\contento\type;
 
 
-class Doi
+class Doi implements \JsonSerializable
 {
     private $doi;
 
@@ -26,6 +26,11 @@ class Doi
     }
 
     public function __toString() : string {
+        return $this->doi;
+    }
+
+    public function jsonSerialize()
+    {
         return $this->doi;
     }
 }

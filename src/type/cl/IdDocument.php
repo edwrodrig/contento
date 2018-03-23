@@ -11,7 +11,9 @@ namespace edwrodrig\contento\type\cl;
  * @contento_label_es documento de identificación
  * @contento_label_en identification document
  */
-class IdDocument
+use JsonSerializable;
+
+class IdDocument implements JsonSerializable
 {
 
     /**
@@ -89,6 +91,10 @@ class IdDocument
 
     public function get_number() : string {
         return $this->number;
+    }
+
+    public function jsonSerialize() {
+        return $this->to_array();
     }
 
 

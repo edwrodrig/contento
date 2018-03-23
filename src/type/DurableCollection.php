@@ -87,4 +87,8 @@ trait DurableCollection
     public function count() : int {
         return count($this->elements);
     }
+
+    public function jsonSerialize() {
+        return $this->elements;
+    }
 }

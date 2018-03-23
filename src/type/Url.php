@@ -14,7 +14,7 @@ namespace edwrodrig\contento\type;
  * @contento_label_es dirección web
  * @contento_label_en web address
  */
-class Url
+class Url implements \JsonSerializable
 {
     /**
      * @var string
@@ -34,6 +34,10 @@ class Url
     }
 
     public function __toString() : string {
+        return $this->url;
+    }
+
+    public function jsonSerialize() {
         return $this->url;
     }
 }

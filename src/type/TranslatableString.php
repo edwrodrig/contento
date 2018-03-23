@@ -9,8 +9,9 @@
 namespace edwrodrig\contento\type;
 
 use ArrayAccess;
+use JsonSerializable;
 
-class TranslatableString implements ArrayAccess
+class TranslatableString implements ArrayAccess, JsonSerializable
 {
     /**
      * array
@@ -48,6 +49,10 @@ class TranslatableString implements ArrayAccess
     }
 
     public function from_array() : array {
+        return $this->strings;
+    }
+
+    public function jsonSerialize() {
         return $this->strings;
     }
 

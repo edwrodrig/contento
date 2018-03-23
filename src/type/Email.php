@@ -34,4 +34,8 @@ class Email
     public function __toString() : string {
         return $this->mail;
     }
+
+    public function jsonSerialize() {
+        return $this->mail;
+    }
 }

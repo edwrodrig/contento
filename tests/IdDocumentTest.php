@@ -15,5 +15,7 @@ class IdDocumentTest extends TestCase
         $doc = IdDocument::create_from_array(['type' => 'rut', 'number' => '16.036.959-K']);
         $this->assertEquals('rut', $doc->get_type());
         $this->assertEquals('16036959-k', $doc->get_number());
+
+        $this->assertJsonStringEqualsJsonString('{"type": "rut", "number": "16036959-k"}', json_encode($doc));
     }
 }
