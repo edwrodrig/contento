@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Legacy" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/examples/test_legacy.php">
+    <method />
+  </configuration>
+</component>
