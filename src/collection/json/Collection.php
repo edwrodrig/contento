@@ -84,6 +84,9 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
         foreach ( $elements as $element ) {
             $r->elements[$element->get_id()] = $element;
         }
+        if ( !empty($r->elements) ) {
+            $r->class = get_class($r->elements[0]);
+        }
 
         return $r;
     }

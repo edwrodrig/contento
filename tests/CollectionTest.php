@@ -55,4 +55,31 @@ class CollectionTest extends TestCase
 
 
     }
+
+    public function testCreateFromElements() {
+        $data = [
+            CollectionElement::create_from_array([
+                'id' => '0',
+                'name' => 'edwin'
+            ]),
+            CollectionElement::create_from_array([
+                'id' => '1',
+                'name' => 'edgar'
+            ])
+        ];
+
+        $collection = Collection::create_from_elements($data);
+
+        $this->assertEquals(2, count($collection));
+        $this->assertEquals('edwin', $collection['0']->name);
+        $this->assertEquals('edgar', $collection['1']->name);
+
+        $array = iterator_to_array($collection);
+        $this->assertEquals(['0', '1'], array_keys($array));
+
+        $collection->reverse_sort();
+        $array = iterator_to_array($collection);
+        $this->assertEquals(['1', '0'], array_keys($array));
+
+    }
 }
