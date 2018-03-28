@@ -81,11 +81,13 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
 
     public static function create_from_elements(array $elements) : self {
         $r = new self;
+        $last_element = null;
         foreach ( $elements as $element ) {
             $r->elements[$element->get_id()] = $element;
+            $last_element = $element;
         }
-        if ( !empty($r->elements) ) {
-            $r->class = get_class($r->elements[0]);
+        if ( !is_null($last_element) ) {
+            $r->class = get_class($last_element);
         }
 
         return $r;
