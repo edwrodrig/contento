@@ -11,7 +11,7 @@ namespace edwrodrig\contento\collection\json;
 
 class Singleton
 {
-    public static function create_from_json(string $filename, string $class) : self {
+    public static function create_from_json(string $filename, string $class) {
         $element = json_decode(file_get_contents($filename), true);
 
         return $class::create_from_array($element);
