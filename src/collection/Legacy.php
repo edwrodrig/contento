@@ -57,4 +57,13 @@ class Legacy
         }
         return $elements;
     }
+
+    public function get_single_data($collection, $class) {
+         $data = $this->get_data($collection, $class);
+
+         if ( count($data) > 0 ) {
+             return $data[0];
+         } else
+             return null;
+    }
 }
