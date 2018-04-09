@@ -8,6 +8,8 @@
 
 namespace edwrodrig\contento\collection;
 
+use DateTime;
+
 class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
 {
     public $server;
@@ -20,6 +22,10 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
         $this->filename = $this->id;
 
 
+    }
+
+    public function get_id() : string {
+        return $this->id;
     }
 
     public function get_last_modification_date() {

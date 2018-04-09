@@ -75,7 +75,7 @@ class Legacy
         $elements = [];
 
         foreach ( $result as $data) {
-            $elements[] = new LegacyImage($this, $data['data']);
+            $elements[] = new LegacyImage($this, $data);
         }
         return $elements;
     }
