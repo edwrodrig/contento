@@ -14,7 +14,6 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
 {
     public $server;
     protected $last_modification_date;
-    private $last_cache_used;
 
     public function __construct($server, $data) {
         $this->server = $server;
