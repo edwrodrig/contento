@@ -9,8 +9,6 @@
 namespace edwrodrig\contento\collection;
 
 
-use edwrodrig\static_generator\cache\LegacyImage;
-
 class Legacy
 {
     protected $end_point;

@@ -7,7 +7,6 @@
  */
 
 namespace edwrodrig\contento\collection;
-namespace edwrodrig\static_generator\cache;
 
 class LegacyImage extends ImageItem
 {
