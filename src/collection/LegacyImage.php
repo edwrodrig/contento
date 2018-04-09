@@ -26,7 +26,7 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
         return $this->last_modification_date;
     }
 
-    public function cache_generate(Cache $cache) {
+    public function cache_generate(\edwrodrig\static_generator\cache\Cache $cache) {
         $this->last_cache_used = $cache;
 
         $filename = tempnam('/tmp','li_');
