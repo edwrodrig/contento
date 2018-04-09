@@ -8,7 +8,7 @@
 
 namespace edwrodrig\contento\collection;
 
-class LegacyImage extends ImageItem
+class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
 {
     public $server;
     protected $last_modification_date;
