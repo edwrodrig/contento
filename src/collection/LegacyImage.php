@@ -14,6 +14,7 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
 {
     public $server;
     protected $last_modification_date;
+    private $last_cache_used;
 
     public function __construct($server, $data) {
         $this->server = $server;
@@ -21,7 +22,10 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
         $this->id = $data['id'];
         $this->filename = $this->id;
 
+    }
 
+    public static function create_from_array($server, $data) {
+        return new self($server, $data);
     }
 
     public function get_id() : string {

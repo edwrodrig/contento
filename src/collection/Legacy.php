@@ -58,7 +58,8 @@ class Legacy
         return $elements;
     }
 
-    public function get_images() {
+    public function get_images($class)
+     {
         $result = file_get_contents($this->end_point, false, stream_context_create([
             'http' => [
                 'method' => 'POST',
@@ -75,7 +76,7 @@ class Legacy
         $elements = [];
 
         foreach ( $result as $data) {
-            $elements[] = new LegacyImage($this, $data);
+            $elements[] = $class::create_from_array($this, $data);
         }
         return $elements;
     }
