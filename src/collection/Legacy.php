@@ -87,7 +87,7 @@ class Legacy
                 'method' => 'POST',
                 'header' => "Content-Type: application/json\r\n",
                 'content' => json_encode([
-                    'action' => 'image_by_id',
+                    'action' => 'image_file_by_id',
                     'id' => $id,
                     'session' => $this->session
                 ])
