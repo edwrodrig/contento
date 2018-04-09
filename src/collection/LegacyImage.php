@@ -31,7 +31,7 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
         return $this->id;
     }
 
-    public function get_last_modification_date() {
+    public function get_last_modification_time() : DateTime {
         return $this->last_modification_date;
     }
 
