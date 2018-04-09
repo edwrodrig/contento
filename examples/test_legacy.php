@@ -31,4 +31,7 @@ $c->login($credentials['user'], $credentials['pass']);
 
 $collection = $c->get_data('icm_academic_programs', Element::class);
 
+//$collection =  $c->get_images();
+
+
 var_dump($collection);

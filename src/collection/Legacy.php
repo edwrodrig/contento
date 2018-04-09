@@ -58,6 +58,43 @@ class Legacy
         return $elements;
     }
 
+    public function get_images() {
+        $result = file_get_contents($this->end_point, false, stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/json\r\n",
+                'content' => json_encode([
+                    'action' => 'image_by',
+                    'session' => $this->session
+                ])
+            ]
+        ]));
+
+        $result = json_decode($result, true)['data'];
+
+        $elements = [];
+
+        foreach ( $result as $data) {
+            $elements[] = new LegacyImage($this, $data['data']);
+        }
+        return $elements;
+    }
+
+    public function get_image($id) {
+        return file_get_contents($this->end_point, false, stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/json\r\n",
+                'content' => json_encode([
+                    'action' => 'image_by_id',
+                    'id' => $id,
+                    'session' => $this->session
+                ])
+            ]
+        ]));
+    }
+
+
     public function get_single_data($collection, $class) {
          $data = $this->get_data($collection, $class);
 
