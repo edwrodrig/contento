@@ -19,7 +19,7 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
 
     public function __construct($server, $data) {
         $this->server = $server;
-        $this->last_modification_date = DateTime::createFromFormat('Y-m-d h:i:s', $data['time']);
+        $this->last_modification_date = new DateTime($data['time']);
         $this->id = $data['id'];
         $this->filename = $this->id;
 
@@ -37,7 +37,7 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
         if ( is_null($this->source_filename) ) {
             $this->source_filename = tempnam('/tmp','li_');
             file_put_contents($this->source_filename, $this->server->get_image($this->id));
-            $type = finfo_open(FILEINFO_MIME_TYPE, $this->filename);
+            $type = mime_content_type($this->source_filename);
             if ( $type == 'image/jpeg')
                 $this->extension = 'jpg';
             else if ( $type = 'image/png' )
@@ -53,10 +53,6 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
     public function cache_generate(\edwrodrig\static_generator\cache\Cache $cache) {
         $this->last_cache_used = $cache;
 
-        $filename = tempnam('/tmp','li_');
-        file_put_contents($filename, $this->server->get_image($this->id));
-
-
         $img = \edwrodrig\image\Image::optimize($this->get_source_filename(), $this->size_hint);
         if ( $this->mode == 'contain' ) {
             $img = \edwrodrig\image\Image::contain($img, $this->width, $this->height);
@@ -65,7 +61,6 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
             $img = \edwrodrig\image\Image::cover($img, $this->width, $this->height);
         }
         $img->writeImage($cache->cache_filename($this->get_cached_file()));
-        $cache->update_cache($this);
     }
 
 }
