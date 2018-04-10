@@ -50,17 +50,9 @@ class LegacyImage extends \edwrodrig\static_generator\cache\ImageItem
         return $this->last_modification_date;
     }
 
-    public function cache_generate(\edwrodrig\static_generator\cache\Cache $cache) {
-        $this->last_cache_used = $cache;
-
-        $img = \edwrodrig\image\Image::optimize($this->get_source_filename(), $this->size_hint);
-        if ( $this->mode == 'contain' ) {
-            $img = \edwrodrig\image\Image::contain($img, $this->width, $this->height);
-
-        } else if ( $this->mode == 'cover' ) {
-            $img = \edwrodrig\image\Image::cover($img, $this->width, $this->height);
-        }
-        $img->writeImage($cache->cache_filename($this->get_cached_file()));
+    public function get_cached_file() : string {
+        $this->get_source_filename();
+        return parent::get_cached_file();
     }
 
 }
