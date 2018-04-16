@@ -9,6 +9,8 @@
 namespace edwrodrig\contento\collection;
 
 
+use edwrodrig\contento\type\DefaultElement;
+
 class Legacy
 {
     protected $end_point;
@@ -34,7 +36,7 @@ class Legacy
         $this->session = json_decode($result, true)['data']['session'];
     }
 
-    public function get_data($collection, $class) {
+    public function get_data(string $collection, string $class = DefaultElement::class) {
         $result = file_get_contents($this->end_point, false, stream_context_create([
             'http' => [
                 'method' => 'POST',
@@ -58,7 +60,7 @@ class Legacy
         return $elements;
     }
 
-    public function get_images($class)
+    public function get_images(string $class = DefaultElement::class)
      {
         $result = file_get_contents($this->end_point, false, stream_context_create([
             'http' => [
@@ -96,7 +98,7 @@ class Legacy
     }
 
 
-    public function get_single_data($collection, $class) {
+    public function get_single_data(string $collection, string $class = DefaultElement::class) {
          $data = $this->get_data($collection, $class);
 
          if ( count($data) > 0 ) {

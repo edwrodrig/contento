@@ -10,6 +10,7 @@ namespace edwrodrig\contento\collection\json;
 
 use ArrayAccess;
 use Countable;
+use edwrodrig\contento\type\DefaultElement;
 use IteratorAggregate;
 use ArrayIterator;
 
@@ -93,13 +94,13 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
         return $r;
     }
 
-    public static function create_from_array(array $elements, string $class) : self {
+    public static function create_from_array(array $elements, string $class = DefaultElement::class) : self {
         $r = new self;
         $r->from_array($elements, $class);
         return $r;
     }
 
-    public static function create_from_json(string $filename, string $class) : self {
+    public static function create_from_json(string $filename, string $class = DefaultElement::class) : self {
         $elements = json_decode(file_get_contents($filename), true);
 
         return self::create_from_array($elements, $class);
