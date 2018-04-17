@@ -68,7 +68,7 @@ class IdDocumentType implements JsonSerializable
      * @return string
      * @throws exception\InvalidIdDocumentNumberException
      */
-    public function validate($number) : string {
+    public function validate(string $number) : string {
 
         $number = trim($number ?? '');
         $number = strtolower($number);
@@ -79,13 +79,10 @@ class IdDocumentType implements JsonSerializable
 
         if ( $this->type == IdDocumentType::RUT ) {
             $number = str_replace('.', '', $number);
-            if ( !preg_match('/\d+-[\dk]/', $number) ) {
+            if ( !preg_match('/\d+-[\dk]/', $number) )
                 throw new exception\InvalidIdDocumentNumberException($number);
         }
 
         return $number;
     }
-}
-
-
 }
