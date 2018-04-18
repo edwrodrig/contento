@@ -55,6 +55,11 @@ class DateDuration
         ];
     }
 
+    public function set_year(int $year) {
+        $this->start = DateTime::createFromFormat('Y-m-d', $year . '-01-01');
+        $this->end = DateTime::createFromFormat('Y-m-d', $year . '-12-31');
+    }
+
     public function has_started($now = null) : bool {
         if ( is_null($now) )
             $now = new DateTime;
@@ -129,6 +134,7 @@ class DateDuration
 
         return 0;
     }
+
 
 
 }
