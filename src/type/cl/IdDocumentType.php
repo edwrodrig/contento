@@ -7,14 +7,13 @@
  */
 
 namespace edwrodrig\contento\type\cl;
-
-use JsonSerializable;
+use edwrodrig\contento\type\Enumeration;
 
 /**
  * @contento_label_es tipo de documento de identificación
  * @contento_label_en identification document type
  */
-class IdDocumentType implements JsonSerializable
+class IdDocumentType extends Enumeration
 {
 
     /**
@@ -35,35 +34,7 @@ class IdDocumentType implements JsonSerializable
      */
     const OTHER = 'other';
 
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * Type constructor.
-     * @param string $type
-     * @throws exception\InvalidIdDocumentTypeException
-     */
-    public function __construct(string $type) {
-
-        $this->type = $type;
-
-        if ( self::RUT == $type);
-        else if ( self::PP == $type );
-        else if ( self::OTHER == $type );
-        else throw new exception\InvalidIdDocumentTypeException($type);
-    }
-
-    public function __toString() : string {
-        return $this->type;
-    }
-
-    public function jsonSerialize() {
-        return $this->type;
-    }
-
-    /**
+        /**
      * @param $number
      * @return string
      * @throws exception\InvalidIdDocumentNumberException
@@ -77,7 +48,7 @@ class IdDocumentType implements JsonSerializable
         if ( strlen($number) < 4 )
             throw new exception\InvalidIdDocumentNumberException($number);
 
-        if ( $this->type == IdDocumentType::RUT ) {
+        if ( $this->value == IdDocumentType::RUT ) {
             $number = str_replace('.', '', $number);
             if ( !preg_match('/\d+-[\dk]/', $number) )
                 throw new exception\InvalidIdDocumentNumberException($number);

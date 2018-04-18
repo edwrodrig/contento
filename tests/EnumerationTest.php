@@ -23,7 +23,7 @@ class EnumerationTest extends TestCase
 
     /**
      * @expectedException edwrodrig\contento\type\exception\InvalidEnumerationValueException
-     * @expectedExceptionMessage hola
+     * @expectedExceptionMessage Enum [hola]
      *
      */
     public function testException() {

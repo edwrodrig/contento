@@ -20,16 +20,16 @@ class IdDocumentTest extends TestCase
     }
 
     /**
-     * @expectedException edwrodrig\contento\type\cl\exception\InvalidIdDocumentTypeException
-     * @expectedExceptionMessage wachulin
+     * @expectedException edwrodrig\contento\type\exception\InvalidEnumerationValueException
+     * @expectedExceptionMessage IdDocumentType [wachulin]
      */
     public function testIdDocumentInvalid() {
         $doc = IdDocument::create_from_array(['type' => 'wachulin', 'number' => '16.036.959-K']);
     }
 
     /**
-     * @expectedException edwrodrig\contento\type\cl\exception\InvalidIdDocumentTypeException
-     * @expectedExceptionMessage
+     * @expectedException edwrodrig\contento\type\exception\InvalidEnumerationValueException
+     * @expectedExceptionMessage IdDocumentType []
      */
     public function testIdDocumentInvalid2() {
         $doc = IdDocument::create_from_array(['number' => '16.036.959-K']);

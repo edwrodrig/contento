@@ -8,9 +8,10 @@
 
 namespace edwrodrig\contento\type;
 
+use JsonSerializable;
 use ReflectionClass;
 
-abstract class Enumeration
+abstract class Enumeration implements JsonSerializable
 {
 
     /**
@@ -28,7 +29,7 @@ abstract class Enumeration
         if ( in_array($value, $this->get_consts()) ) {
             $this->value = $value;
         } else
-            throw new exception\InvalidEnumerationValueException($value);
+            throw new exception\InvalidEnumerationValueException($value, get_class($this));
     }
 
     private function get_consts() : array
