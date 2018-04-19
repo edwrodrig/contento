@@ -62,6 +62,10 @@ trait DurableCollection
         return $copy;
     }
 
+    public function is_active($now = null) : bool {
+        $elements = $this->get_active_elements($now);
+        return count($elements) > 0;
+    }
 
 
     public function offsetExists($offset) : bool {
