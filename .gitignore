@@ -1,7 +1,8 @@
 *.swp
-composer.lock
-composer.phar
-vendor
-.idea
-!.idea/php.xml
-!.idea/runConfigurations/*
+/composer.phar
+/composer.lock
+output
+/vendor
+/.idea/*
+!/.idea/php.xml
+!/.idea/runConfigurations/*
