@@ -9,6 +9,7 @@
 namespace edwrodrig\contento\type;
 
 use ArrayIterator;
+use DateTime;
 
 trait DurableCollection
 {
@@ -31,6 +32,7 @@ trait DurableCollection
         $copy->elements = [];
 
         foreach ( $this->elements as $element ) {
+            /** @var $element Durable*/
             if ( $element->get_duration()->is_active($now) ) {
                 $copy->elements[] = $element;
             }
@@ -43,6 +45,7 @@ trait DurableCollection
         $copy->elements = [];
 
         foreach ( $this->elements as $element ) {
+            /** @var $element Durable*/
             if ( $element->get_duration()->has_finished($now) ) {
                 $copy->elements[] = $element;
             }
@@ -55,6 +58,7 @@ trait DurableCollection
         $copy->elements = [];
 
         foreach ( $this->elements as $element ) {
+            /** @var $element Durable*/
             if ( $element->get_duration()->has_started($now) ) {
                 $copy->elements[] = $element;
             }
@@ -94,5 +98,29 @@ trait DurableCollection
 
     public function jsonSerialize() {
         return $this->elements;
+    }
+
+    public function get_start() : ?DateTime {
+        $min = null;
+        foreach ( $this->elements as $element ) {
+            /** @var $element Durable*/
+            $start = $element->get_duration()->get_start();
+            if ( is_null($start) ) return null;
+            if ( is_null($min) ) $min = $start;
+            else if ( $min > $start ) $min = $start;
+        }
+        return $min;
+    }
+
+    public function get_end() : ?DateTime {
+        $max = null;
+        foreach ( $this->elements as $element ) {
+            /** @var $element Durable*/
+            $end = $element->get_duration()->get_end();
+            if ( is_null($end) ) return null;
+            if ( is_null($max) ) $max = $end;
+            else if ( $max < $end ) $max = $end;
+        }
+        return $max;
     }
 }
