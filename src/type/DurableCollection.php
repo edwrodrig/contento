@@ -123,4 +123,12 @@ trait DurableCollection
         }
         return $max;
     }
+
+    public function get_first() {
+        return $this->elements[count($this->elements) - 1] ?? null;
+    }
+
+    public function get_last() {
+        return $this->elements[0] ?? null;
+    }
 }

@@ -66,6 +66,9 @@ class DurableCollectionTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(DateTime::createFromFormat('Y-m-d', '1900-01-01'), $collection->get_start());
         $this->assertEquals(DateTime::createFromFormat('Y-m-d', '1940-01-01'), $collection->get_end());
+
+        $this->assertEquals(DateTime::createFromFormat('Y-m-d', '1900-01-01'), $collection->get_first()->get_duration()->get_start());
+        $this->assertEquals(DateTime::createFromFormat('Y-m-d', '1940-01-01'), $collection->get_last()->get_duration()->get_end());
     }
 
 
