@@ -60,6 +60,25 @@ class Legacy
         return $elements;
     }
 
+    public function update_data(string $collection, array $data) {
+        $result = file_get_contents($this->end_point, false, stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/json\r\n",
+                'content' => json_encode([
+                    'action' => 'contento_data_update',
+                    'collection' => $collection,
+                    'session' => $this->session,
+                    'name' => $data['id'],
+                    'data' => json_encode($data, JSON_PRETTY_PRINT)
+                ])
+            ]
+        ]));
+
+        return $result;
+
+    }
+
     public function get_images(string $class = DefaultElement::class)
      {
         $result = file_get_contents($this->end_point, false, stream_context_create([
