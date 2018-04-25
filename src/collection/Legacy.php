@@ -70,7 +70,7 @@ class Legacy
                     'collection' => $collection,
                     'session' => $this->session,
                     'name' => $data['id'],
-                    'data' => json_encode($data, JSON_PRETTY_PRINT)
+                    'data' => $data
                 ])
             ]
         ]));
