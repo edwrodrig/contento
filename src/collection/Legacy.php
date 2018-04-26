@@ -60,6 +60,24 @@ class Legacy
         return $elements;
     }
 
+    public function add_data(string $collection, array $data) {
+        $result = file_get_contents($this->end_point, false, stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/json\r\n",
+                'content' => json_encode([
+                    'action' => 'contento_data_add',
+                    'collection' => $collection,
+                    'session' => $this->session,
+                    'data' => $data
+                ])
+            ]
+        ]));
+
+        return $result;
+
+    }
+
     public function update_data(string $collection, array $data) {
         $result = file_get_contents($this->end_point, false, stream_context_create([
             'http' => [
