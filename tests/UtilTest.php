@@ -7,7 +7,7 @@
  */
 
 use edwrodrig\contento\type\Email;
-use edwrodrig\contento\Util;
+use edwrodrig\contento\util\Util;
 use PHPUnit\Framework\TestCase;
 
 class UtilTest extends TestCase
@@ -18,9 +18,9 @@ class UtilTest extends TestCase
             'wrong_mail' => 'edwin',
             'ok_mail' => 'edwin@mail.com'
         ];
-        $this->assertNull(Util::create_or_null($data['unexistant'], Email::class));
-        $this->assertNull(Util::create_or_null($data['null'], Email::class));
-        $this->assertNull(Util::create_or_null($data['wrong_mail'], Email::class));
-        $this->assertInstanceOf(Email::class, Util::create_or_null($data['ok_mail'], Email::class));
+        $this->assertNull(Util::createOrNull($data['unexistant'], Email::class));
+        $this->assertNull(Util::createOrNull($data['null'], Email::class));
+        $this->assertNull(Util::createOrNull($data['wrong_mail'], Email::class));
+        $this->assertInstanceOf(Email::class, Util::createOrNull($data['ok_mail'], Email::class));
     }
 }

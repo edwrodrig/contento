@@ -1,73 +1,129 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 22-03-18
- * Time: 7:35
- */
+declare(strict_types=1);
 
 namespace edwrodrig\contento\type;
 
 use ArrayIterator;
 use DateTime;
 
+/**
+ * Trait DurableCollection
+ *
+ * This trait is useful when an object has a set of object with durations, for example the studies of a person.
+ * Every study has a duration so the education of a person as a set of study is a durable collection
+ * @package edwrodrig\contento\type
+ */
 trait DurableCollection
 {
     /**
+     * The durable elements
      * @var Durable[]
      */
     protected $elements;
 
-
+    /**
+     * Get an interator.
+     *
+     * Convenience funciton to iterate thought the class. In the class that use this trait just need to implements IteratorAggregate in their declaration to be iterable.
+     * ```
+     * class SomeCollection implements IteratorAggregate {
+     *      use DurableCollection;
+     * }
+     * @return ArrayIterator
+     */
     public function getIterator() {
         return new ArrayIterator($this->elements);
     }
 
-    public function sort() {
-        usort($this->elements, function($a, $b) { return DateDuration::compare($a->get_duration(), $b->get_duration()); });
+    /**
+     * Sort the dates.
+     *
+     * When you use this class always keep elements sorted or some functions will return wrong values.
+     *
+     */
+    public function sort() : self {
+
+        usort($this->elements, function($a, $b) {
+            /**
+             * @var $a Durable
+             * @var $b Durable
+             */
+            return DateDuration::compare($a->getDuration(), $b->getDuration());
+        });
+
+        return $this;
     }
 
-    public function get_active_elements($now = null) {
+    /**
+     * Get the active elements.
+     *
+     * Returns a new DurableCollection element with the {@see DateDuration::isActive() active elements} only
+     * @param null|DateDuration|DateTime $now
+     * @return DurableCollection
+     */
+    public function getActiveElements($now = null) : self {
         $copy = clone $this;
         $copy->elements = [];
 
         foreach ( $this->elements as $element ) {
             /** @var $element Durable*/
-            if ( $element->get_duration()->is_active($now) ) {
+            if ( $element->getDuration()->isActive($now) ) {
                 $copy->elements[] = $element;
             }
         }
         return $copy;
     }
 
-    public function get_finished_elements($now = null) {
+    /**
+     * Get the finished elements.
+     *
+     * Returns a new DurableCollection element with the {@see DateDuration::hasFinished() finished elements} only
+     * @param null|DateDuration|DateTime $now
+     * @return DurableCollection
+     */
+    public function getFinishedElements($now = null) : self {
         $copy = clone $this;
         $copy->elements = [];
 
         foreach ( $this->elements as $element ) {
             /** @var $element Durable*/
-            if ( $element->get_duration()->has_finished($now) ) {
+            if ( $element->getDuration()->hasFinished($now) ) {
                 $copy->elements[] = $element;
             }
         }
         return $copy;
     }
 
-    public function get_started_elements($now = null) {
+    /**
+     * Get the started elements.
+     *
+     * Returns a new DurableCollection element with the {@see DateDuration::hasStarted() started elements} only
+     * @param null|DateDuration|DateTime $now
+     * @return DurableCollection
+     */
+    public function getStartedElements($now = null) : self {
         $copy = clone $this;
         $copy->elements = [];
 
         foreach ( $this->elements as $element ) {
             /** @var $element Durable*/
-            if ( $element->get_duration()->has_started($now) ) {
+            if ( $element->getDuration()->hasStarted($now) ) {
                 $copy->elements[] = $element;
             }
         }
         return $copy;
     }
 
-    public function is_active($now = null) : bool {
-        $elements = $this->get_active_elements($now);
+    /**
+     * Is active?
+     *
+     * Returns if one of the elements is active.
+     * @uses DurationCollection::getActiveElements()
+     * @param null|DateDuration|DateTime $now
+     * @return DurableCollection
+     */
+    public function isActive($now = null) : bool {
+        $elements = $this->getActiveElements($now);
         return count($elements) > 0;
     }
 
@@ -92,6 +148,10 @@ trait DurableCollection
 
     public function offsetUnset($offset) {}
 
+    /**
+     * The number of elements.
+     * @return int
+     */
     public function count() : int {
         return count($this->elements);
     }
@@ -100,11 +160,17 @@ trait DurableCollection
         return $this->elements;
     }
 
-    public function get_start() : ?DateTime {
+    /**
+     * Get the start date of the collection.
+     *
+     * The most past {@see DateDuration::getStart() start date} in the collection. Null means start of time
+     * @return DateTime|null
+     */
+    public function getStart() : ?DateTime {
         $min = null;
         foreach ( $this->elements as $element ) {
             /** @var $element Durable*/
-            $start = $element->get_duration()->get_start();
+            $start = $element->getDuration()->getStart();
             if ( is_null($start) ) return null;
             if ( is_null($min) ) $min = $start;
             else if ( $min > $start ) $min = $start;
@@ -112,11 +178,17 @@ trait DurableCollection
         return $min;
     }
 
-    public function get_end() : ?DateTime {
+    /**
+     * Get the end date of the collection.
+     *
+     * The most future {@see DateDuration::getEnd() end date} in the collection. Null means end of time
+     * @return DateTime|null
+     */
+    public function getEnd() : ?DateTime {
         $max = null;
         foreach ( $this->elements as $element ) {
             /** @var $element Durable*/
-            $end = $element->get_duration()->get_end();
+            $end = $element->getDuration()->getEnd();
             if ( is_null($end) ) return null;
             if ( is_null($max) ) $max = $end;
             else if ( $max < $end ) $max = $end;
@@ -124,11 +196,25 @@ trait DurableCollection
         return $max;
     }
 
-    public function get_first() {
+    /**
+     * Get the first element occurred.
+     *
+     * The element most related to past
+     * The elements must be {@see DurableCollection::sort() sorted}
+     * @return Durable|null
+     */
+    public function getFirst() {
         return $this->elements[count($this->elements) - 1] ?? null;
     }
 
-    public function get_last() {
+    /**
+     * Get the last element occurred.
+     *
+     * The element most related to future.
+      The elements must be {@see DurableCollection::sort() sorted}
+     * @return Durable|null
+     */
+    public function getLast() {
         return $this->elements[0] ?? null;
     }
 }

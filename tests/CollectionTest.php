@@ -6,18 +6,18 @@
  * Time: 15:27
  */
 
-use edwrodrig\contento\collection\json\Collection;
+use edwrodrig\contento\collection\Collection;
 use PHPUnit\Framework\TestCase;
 
 class CollectionElement {
-    public static function create_from_array(array $data) {
+    public static function createFromArray(array $data) {
         $o = new self;
         $o->id = $data['id'];
         $o->name = $data['name'];
         return $o;
     }
 
-    public function get_id() : string {
+    public function getId() : string {
         return $this->id;
     }
 
@@ -40,16 +40,16 @@ class CollectionTest extends TestCase
             ]
         ];
 
-        $collection = Collection::create_from_array($data, CollectionElement::class);
+        $collection = Collection::createFromArray($data, CollectionElement::class);
 
         $this->assertEquals(2, count($collection));
-        $this->assertEquals('edwin', $collection['0']->name);
-        $this->assertEquals('edgar', $collection['1']->name);
+        $this->assertEquals('edwin', $collection->getElement('0')->name);
+        $this->assertEquals('edgar', $collection->getElement('1')->name);
 
         $array = iterator_to_array($collection);
         $this->assertEquals(['0', '1'], array_keys($array));
 
-        $collection->reverse_sort();
+        $collection->reverseSort();
         $array = iterator_to_array($collection);
         $this->assertEquals(['1', '0'], array_keys($array));
 
@@ -58,26 +58,26 @@ class CollectionTest extends TestCase
 
     public function testCreateFromElements() {
         $data = [
-            CollectionElement::create_from_array([
+            CollectionElement::createFromArray([
                 'id' => '0',
                 'name' => 'edwin'
             ]),
-            CollectionElement::create_from_array([
+            CollectionElement::createFromArray([
                 'id' => '1',
                 'name' => 'edgar'
             ])
         ];
 
-        $collection = Collection::create_from_elements($data);
+        $collection = Collection::createFromElements($data);
 
         $this->assertEquals(2, count($collection));
-        $this->assertEquals('edwin', $collection['0']->name);
-        $this->assertEquals('edgar', $collection['1']->name);
+        $this->assertEquals('edwin', $collection->getElement('0')->name);
+        $this->assertEquals('edgar', $collection->getElement('1')->name);
 
         $array = iterator_to_array($collection);
         $this->assertEquals(['0', '1'], array_keys($array));
 
-        $collection->reverse_sort();
+        $collection->reverseSort();
         $array = iterator_to_array($collection);
         $this->assertEquals(['1', '0'], array_keys($array));
 

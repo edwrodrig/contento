@@ -8,6 +8,7 @@
 
 namespace edwrodrig\contento\type\exception;
 
+use DateTime;
 use Exception;
 
 class InvalidDateDurationException extends Exception
@@ -15,10 +16,10 @@ class InvalidDateDurationException extends Exception
 
     /**
      * InvalidDateDurationException constructor.
-     * @param Date $start
-     * @param Date $end
+     * @param DateTime $start
+     * @param DateTime $end
      */
-    public function __construct(Date $start, Date $end)
+    public function __construct(DateTime $start, DateTime $end)
     {
         parent::__construct(sprintf("[%s][%s]", $start->format('Y-m-d H:i:s'), $end->format('Y-m-d H:i:s')));
     }
