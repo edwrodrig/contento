@@ -24,7 +24,7 @@ trait DurableCollection
     /**
      * Get an interator.
      *
-     * Convenience funciton to iterate thought the class. In the class that use this trait just need to implements IteratorAggregate in their declaration to be iterable.
+     * Convenience function to iterate thought the class. In the class that use this trait just need to implements IteratorAggregate in their declaration to be iterable.
      * ```
      * class SomeCollection implements IteratorAggregate {
      *      use DurableCollection;
@@ -39,7 +39,7 @@ trait DurableCollection
      * Sort the dates.
      *
      * When you use this class always keep elements sorted or some functions will return wrong values.
-     *
+     * The first indexes are in the past and the last are more in the present
      */
     public function sort() : self {
 
@@ -120,9 +120,12 @@ trait DurableCollection
      * Returns if one of the elements is active.
      * @uses DurationCollection::getActiveElements()
      * @param null|DateDuration|DateTime $now
-     * @return DurableCollection
+     * @return bool
      */
     public function isActive($now = null) : bool {
+        /**
+         * @var $elements \Countable
+         */
         $elements = $this->getActiveElements($now);
         return count($elements) > 0;
     }
@@ -156,6 +159,10 @@ trait DurableCollection
         return count($this->elements);
     }
 
+    /**
+     * For serializing to json
+     * @return Durable[]
+     */
     public function jsonSerialize() {
         return $this->elements;
     }
@@ -204,7 +211,7 @@ trait DurableCollection
      * @return Durable|null
      */
     public function getFirst() {
-        return $this->elements[count($this->elements) - 1] ?? null;
+        return $this->elements[0] ?? null;
     }
 
     /**
@@ -215,6 +222,6 @@ trait DurableCollection
      * @return Durable|null
      */
     public function getLast() {
-        return $this->elements[0] ?? null;
+        return $this->elements[count($this->elements) - 1] ?? null;
     }
 }

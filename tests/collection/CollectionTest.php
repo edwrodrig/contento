@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 20-03-18
- * Time: 15:27
- */
+
+namespace test\edwrodrig\contento\collection;
 
 use edwrodrig\contento\collection\Collection;
 use PHPUnit\Framework\TestCase;

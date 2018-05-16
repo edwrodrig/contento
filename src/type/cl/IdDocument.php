@@ -1,16 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 21-03-18
- * Time: 13:07
- */
+declare(strict_types=1);
 
 namespace edwrodrig\contento\type\cl;
-/*
- * @contento_label_es documento de identificación
- * @contento_label_en identification document
- */
+
 use JsonSerializable;
 
 

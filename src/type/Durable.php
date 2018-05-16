@@ -1,11 +1,5 @@
 <?php
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 22-03-18
- * Time: 7:32
- */
 
 namespace edwrodrig\contento\type;
 

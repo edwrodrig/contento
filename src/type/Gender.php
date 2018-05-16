@@ -1,16 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 16-03-18
- * Time: 13:31
- */
+declare(strict_types=1);
 
 
 namespace edwrodrig\contento\type;
 
 /**
  * Class Gender
+ *
+ * A enumartion to hold a person gender.
+ *
  * @package edwrodrig\contento\type
  * @contento_label_es género
  * @contento_label_en gender

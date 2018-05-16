@@ -6,6 +6,8 @@
  * Time: 16:33
  */
 
+namespace test\edwrodrig\contento\type;
+
 use edwrodrig\contento\type\TranslatableString;
 
 class TranslatableStringTest extends \PHPUnit\Framework\TestCase

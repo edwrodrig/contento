@@ -2,13 +2,14 @@
 declare(strict_types=1);
 
 namespace edwrodrig\contento\type;
+
 use DateTime;
 use edwrodrig\contento\util\Util;
 
 /**
  * Class DateDuration
  *
- * Defined a duration
+ * Define a duration
  * @package edwrodrig\contento\data\type
  * @contento_label_es duración
  * @contento_label_en duration
@@ -211,14 +212,14 @@ class DateDuration
         $b1 = $b->getStartTimestamp();
         $b2 = $b->getEndTimestamp();
 
-        if ( $a2 < $b1 ) return 1;
-        if ( $b2 < $a1 ) return -1;
+        if ( $a2 < $b1 ) return -1;
+        if ( $b2 < $a1 ) return 1;
 
-        if ( $a2 < $b2 ) return 1;
-        if ( $b2 < $a2 ) return -1;
+        if ( $a2 < $b2 ) return -1;
+        if ( $b2 < $a2 ) return 1;
 
-        if ( $a1 < $b1 ) return 1;
-        if ( $b1 < $a1 ) return -1;
+        if ( $a1 < $b1 ) return -1;
+        if ( $b1 < $a1 ) return 1;
 
         return 0;
     }

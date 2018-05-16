@@ -1,14 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 16-03-18
- * Time: 15:35
- */
+declare(strict_types=1);
 
 namespace edwrodrig\contento\type;
 
-interface Element extends \JsonSerializable {
+use JsonSerializable;
+
+/**
+ * Interface Element
+ *
+ * Interface that must implements elements of a {@see Collection collection}
+ * @package edwrodrig\contento\type
+ */
+interface Element extends JsonSerializable {
 
     const TABLE = <<<SQL
 CREATE TABLE contento_elements
@@ -25,7 +28,19 @@ VALUES
 )
 SQL;
 
-    public function get_id() : string;
+    /**
+     * Get the id of the element.
+     * Must be unique inside a {@see Collection collection}
+     * @return string
+     */
+    public function getId() : string;
 
-    public function get_collection() : string;
+    /**
+     * Get collection name
+     *
+     * Get the name of the {@see Collection collection} that the object belong.
+     * Think about this as a table name in a database or a class name
+     * @return string
+     */
+    public function getCollection() : string;
 }

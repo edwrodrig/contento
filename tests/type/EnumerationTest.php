@@ -6,6 +6,8 @@
  * Time: 12:35
  */
 
+namespace test\edwrodrig\contento\type;
+
 use edwrodrig\contento\type\Enumeration;
 use PHPUnit\Framework\TestCase;
 

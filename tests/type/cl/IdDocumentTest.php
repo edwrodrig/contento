@@ -6,6 +6,8 @@
  * Time: 13:41
  */
 
+namespace test\edwrodrig\contento\type\cl;
+
 use edwrodrig\contento\type\cl\IdDocument;
 use PHPUnit\Framework\TestCase;
 

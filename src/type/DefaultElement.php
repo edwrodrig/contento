@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: edwin
@@ -8,30 +9,52 @@
 
 namespace edwrodrig\contento\type;
 
+
 /**
  * Class DefaultElement
- * Usado para cargar json cuando no se tiene ninguna clase contenedora
+ *
+ * A default class to load from {@see Collection::createFromArray() collections} an {@see Collection::createFromArray() singletons}/
+ * Always prefer to make your own classes. Use this only while you're testing or fast prototyping.
  * @package edwrodrig\contento\type
  */
 class DefaultElement
 {
-    public $data;
+    /**
+     * The array with the original data
+     * @var array
+     */
+    private $data;
 
-    public static function create_from_array(array $data) {
+
+    /**
+     * Constructor from array.
+     *
+     * If the data does not has an {@see DefaultElement::getId() id} it generates one automatically.
+     * @param array $data
+     * @return DefaultElement
+     */
+    public static function createFromArray(array $data) {
+
+        if ( !isset($data['id']) ) $data['id'] = uniqid();
+
         $s = new self;
         $s->data = $data;
         return $s;
     }
 
-    public function get_id() : string {
-        return $this->data['id'] ?? uniqid();
+    /**
+     * Get the id
+     * @return string
+     */
+    public function getId() : string {
+        return $this->data['id'];
     }
 
-    public function __call($name, $args) {
-        $parts = explode('get_', $name, 2);
-        if ( count($parts) != 2 ) throw new \BadMethodCallException($name);
-        if ( !empty($parts[0]) ) throw new \BadMethodCallException($name);
-
-        return $this->data[$parts[1]] ?? null;
+    /**
+     * Get the data
+     * @return array
+     */
+    public function getData() : array {
+        return $this->data;
     }
 }

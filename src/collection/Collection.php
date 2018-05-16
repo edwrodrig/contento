@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 20-03-18
- * Time: 14:13
- */
+declare(strict_types=1);
 
 namespace edwrodrig\contento\collection;
 
@@ -22,15 +17,22 @@ use ArrayIterator;
 class Collection implements Countable, IteratorAggregate
 {
     /**
+     * An array of elements of the collection.
+     * All must be object of class {@see Collection::$class_name}
      * @var array
      */
     private $elements;
 
     /**
-     * @var
+     * The class name of the element of this collection
+     * @var string
      */
     private $class_name;
 
+
+    /**
+     * Collection constructor.
+     */
     protected function __construct() {
         $this->elements = [];
     }
@@ -40,7 +42,10 @@ class Collection implements Countable, IteratorAggregate
 
         foreach ( $data as $element ) {
 
+            /** @noinspection PhpUndefinedMethodInspection */
             $element_object = $class_name::createFromArray($element);
+
+            /** @noinspection PhpUndefinedMethodInspection */
             $this->elements[$element_object->getId()] = $element_object;
         }
     }

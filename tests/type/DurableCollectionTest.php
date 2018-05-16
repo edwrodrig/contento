@@ -6,8 +6,13 @@
  * Time: 17:16
  */
 
+namespace test\edwrodrig\contento\type;
+
+use ArrayAccess;
+use Countable;
 use edwrodrig\contento\type\DateDuration;
 use edwrodrig\contento\type\DurableCollection;
+use edwrodrig\contento\type\exception\InvalidDateDurationException;
 use edwrodrig\contento\util\Util;
 
 class DurableCollectionTest extends \PHPUnit\Framework\TestCase
@@ -18,7 +23,7 @@ class DurableCollectionTest extends \PHPUnit\Framework\TestCase
          */
         $collection = new class implements ArrayAccess, Countable
         {
-            use \edwrodrig\contento\type\DurableCollection;
+            use DurableCollection;
 
             public function __construct() {
                 $this->elements = [
@@ -39,7 +44,7 @@ class DurableCollectionTest extends \PHPUnit\Framework\TestCase
                      *  constructor.
                      * @param string $a
                      * @param string $b
-                     * @throws \edwrodrig\contento\type\exception\InvalidDateDurationException
+                     * @throws InvalidDateDurationException
                      */
                     public function __construct(string $a, string $b) {
                         $this->duration = DateDuration::createFromString($a, $b);

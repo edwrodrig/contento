@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 16-03-18
- * Time: 14:05
- */
+declare(strict_types=1);
 
 namespace edwrodrig\contento\type;
 

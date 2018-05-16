@@ -1,17 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 27-03-18
- * Time: 11:49
- */
+declare(strict_types=1);
 
-namespace edwrodrig\contento\collection;
+namespace edwrodrig\contento\collection\legacy;
 
 
 use edwrodrig\contento\type\DefaultElement;
 
-class Legacy
+
+/**
+ * Class Collection
+ *
+ * This is a class to help to retrieve information with legacy contento server
+ * @package edwrodrig\contento\collection\legacy
+ * @deprecated
+ */
+class Collection
 {
     protected $end_point;
     protected $session = '';
@@ -20,6 +23,11 @@ class Legacy
         $this->end_point = $end_point;
     }
 
+    /**
+     * Login to the
+     * @param string $user
+     * @param string $password
+     */
     public function login(string $user, string $password) {
         $result = file_get_contents($this->end_point, false, stream_context_create([
             'http' => [
@@ -36,7 +44,17 @@ class Legacy
         $this->session = json_decode($result, true)['data']['session'];
     }
 
-    public function get_data(string $collection, string $class = DefaultElement::class) {
+    /**
+     * Get a collection.
+     *
+     * Get an array of elements of a class from the contento server.
+     * The output is suitable to use with {@see Collection::createFromElements()}
+     * @see getElement
+     * @param string $collection
+     * @param string $class
+     * @return array An array with elements of a class
+     */
+    public function getCollection(string $collection, string $class = DefaultElement::class) : array {
         $result = file_get_contents($this->end_point, false, stream_context_create([
             'http' => [
                 'method' => 'POST',
@@ -55,12 +73,19 @@ class Legacy
         $elements = [];
 
         foreach ( $result as $data) {
-            $elements[] = $class::create_from_array($data['data']);
+            /** @noinspection PhpUndefinedMethodInspection */
+            $elements[] = $class::createFromArray($data['data']);
         }
         return $elements;
     }
 
-    public function add_data(string $collection, array $data) {
+    /**
+     * Add an element to a collection
+     * @param string $collection
+     * @param array $data
+     * @return array
+     */
+    public function addElement(string $collection, array $data) : array {
         $result = file_get_contents($this->end_point, false, stream_context_create([
             'http' => [
                 'method' => 'POST',
@@ -78,7 +103,15 @@ class Legacy
 
     }
 
-    public function update_data(string $collection, array $data) {
+    /**
+     * Update an element from a collection
+     *
+     * The data must have a id key
+     * @param string $collection
+     * @param array $data
+     * @return bool|string
+     */
+    public function updateElement(string $collection, array $data) : array {
         $result = file_get_contents($this->end_point, false, stream_context_create([
             'http' => [
                 'method' => 'POST',
@@ -94,10 +127,17 @@ class Legacy
         ]));
 
         return $result;
-
     }
 
-    public function get_images(string $class = DefaultElement::class)
+
+    /**
+     * Get images collection.
+     *
+     * This not retrieve the image data just the reference to the file and other id data.
+     * @param string $class
+     * @return array An array with image elements
+     */
+    public function getImages(string $class = DefaultElement::class) : array
      {
         $result = file_get_contents($this->end_point, false, stream_context_create([
             'http' => [
@@ -115,12 +155,20 @@ class Legacy
         $elements = [];
 
         foreach ( $result as $data) {
-            $elements[] = $class::create_from_array($this, $data);
+            /** @noinspection PhpUndefinedMethodInspection */
+            $elements[] = $class::createFromArray($this, $data);
         }
         return $elements;
     }
 
-    public function get_image($id) {
+    /**
+     * Get the image data.
+     *
+     * Get the actual image data
+     * @param string $id
+     * @return string
+     */
+    public function getImage(string $id) : string {
         return file_get_contents($this->end_point, false, stream_context_create([
             'http' => [
                 'method' => 'POST',
@@ -134,9 +182,16 @@ class Legacy
         ]));
     }
 
-
-    public function get_single_data(string $collection, string $class = DefaultElement::class) {
-         $data = $this->get_data($collection, $class);
+    /**
+     * Get an singleton element
+     *
+     * Singleton is a collection with only one element.
+     * @param string $collection
+     * @param string $class
+     * @return array|null
+     */
+    public function getSingleton(string $collection, string $class = DefaultElement::class) : array {
+         $data = $this->getCollection($collection, $class);
 
          if ( count($data) > 0 ) {
              return $data[0];
