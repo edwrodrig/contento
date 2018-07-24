@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: edwin
@@ -21,11 +22,11 @@ class Reference implements JsonSerializable
         $this->ref = $ref;
     }
 
-    public function get_ref() : string {
+    public function getRef() : string {
         return $this->ref;
     }
 
-    public function get_type() : string {
+    public function getType() : string {
         return $this->type;
     }
 

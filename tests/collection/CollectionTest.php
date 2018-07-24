@@ -78,4 +78,82 @@ class CollectionTest extends TestCase
         $this->assertEquals(['1', '0'], array_keys($array));
 
     }
+
+    public function testCreateFiltered() {
+        $data = [
+            CollectionElement::createFromArray([
+                'id' => '0',
+                'name' => 'edwin'
+            ]),
+            CollectionElement::createFromArray([
+                'id' => '1',
+                'name' => 'edgar'
+            ])
+        ];
+
+        $collection = Collection::createFromElements($data);
+
+        $filtered_collection = $collection->createFiltered(function(CollectionElement $element) { return $element->getId() == '0'; });
+
+        $this->assertEquals(1, count($filtered_collection));
+        $this->assertEquals('edwin', $filtered_collection->getElement('0')->name);
+
+        $filtered_collection = $collection->createFiltered(function(CollectionElement $element) { return $element->getId() == '1'; });
+
+        $this->assertEquals(1, count($filtered_collection));
+        $this->assertEquals('edgar', $filtered_collection->getElement('1')->name);
+    }
+
+    public function testCreateOrganized() {
+        $data = [
+            CollectionElement::createFromArray([
+                'id' => '0',
+                'name' => 'edwin'
+            ]),
+            CollectionElement::createFromArray([
+                'id' => '1',
+                'name' => 'edgar'
+            ]),
+            CollectionElement::createFromArray([
+                'id' => '2',
+                'name' => 'amanda'
+            ])
+        ];
+
+        $collection = Collection::createFromElements($data);
+
+        $organized_collection = $collection->createOrganized(function(CollectionElement $element) { return substr($element->name, 0, 2); });
+
+        $this->assertEquals(2, count($organized_collection));
+        $this->assertEquals(2, count($organized_collection['ed']));
+        $this->assertEquals(1, count($organized_collection['am']));
+
+    }
+
+    public function testCreateOrganized2() {
+        $data = [
+            CollectionElement::createFromArray([
+                'id' => '0',
+                'name' => 'edwin'
+            ]),
+            CollectionElement::createFromArray([
+                'id' => '1',
+                'name' => 'edgar'
+            ]),
+            CollectionElement::createFromArray([
+                'id' => '2',
+                'name' => 'amanda'
+            ])
+        ];
+
+        $collection = Collection::createFromElements($data);
+
+        $organized_collection = $collection->createOrganized(function(CollectionElement $element) { return [substr($element->name, 0, 2), 'all']; });
+
+        $this->assertEquals(3, count($organized_collection));
+        $this->assertEquals(2, count($organized_collection['ed']));
+        $this->assertEquals(1, count($organized_collection['am']));
+        $this->assertEquals(3, count($organized_collection['all']));
+
+    }
 }

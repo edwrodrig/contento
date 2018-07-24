@@ -14,9 +14,9 @@ use PHPUnit\Framework\TestCase;
 class IdDocumentTest extends TestCase
 {
     public function testIdDocument() {
-        $doc = IdDocument::create_from_array(['type' => 'rut', 'number' => '16.036.959-K']);
-        $this->assertEquals('rut', $doc->get_type());
-        $this->assertEquals('16036959-k', $doc->get_number());
+        $doc = IdDocument::createFromArray(['type' => 'rut', 'number' => '16.036.959-K']);
+        $this->assertEquals('rut', $doc->getType());
+        $this->assertEquals('16036959-k', $doc->getNumber());
 
         $this->assertJsonStringEqualsJsonString('{"type": "rut", "number": "16036959-k"}', json_encode($doc));
     }
@@ -26,7 +26,7 @@ class IdDocumentTest extends TestCase
      * @expectedExceptionMessage IdDocumentType [wachulin]
      */
     public function testIdDocumentInvalid() {
-        $doc = IdDocument::create_from_array(['type' => 'wachulin', 'number' => '16.036.959-K']);
+        $doc = IdDocument::createFromArray(['type' => 'wachulin', 'number' => '16.036.959-K']);
     }
 
     /**
@@ -34,7 +34,7 @@ class IdDocumentTest extends TestCase
      * @expectedExceptionMessage IdDocumentType []
      */
     public function testIdDocumentInvalid2() {
-        $doc = IdDocument::create_from_array(['number' => '16.036.959-K']);
+        $doc = IdDocument::createFromArray(['number' => '16.036.959-K']);
     }
 
     /**
@@ -42,7 +42,7 @@ class IdDocumentTest extends TestCase
      * @expectedExceptionMessage 16036959-a
      */
     public function testIdDocumentInvalid3() {
-        $doc = IdDocument::create_from_array(['type' => 'rut', 'number' => '16.036.959-a']);
+        $doc = IdDocument::createFromArray(['type' => 'rut', 'number' => '16.036.959-a']);
     }
 
     /**
@@ -50,6 +50,6 @@ class IdDocumentTest extends TestCase
      * @expectedExceptionMessage 16036959-a
      */
     public function testIdDocumentInvalid4() {
-        $doc = IdDocument::create_from_array(['type' => 'rut', 'number' => '16.036.959-a']);
+        $doc = IdDocument::createFromArray(['type' => 'rut', 'number' => '16.036.959-a']);
     }
 }

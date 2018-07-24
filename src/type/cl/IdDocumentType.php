@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: edwin
- * Date: 21-03-18
- * Time: 13:07
- */
+declare(strict_types=1);
 
 namespace edwrodrig\contento\type\cl;
 use edwrodrig\contento\type\Enumeration;

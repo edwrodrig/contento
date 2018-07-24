@@ -26,40 +26,56 @@ class IdDocument implements JsonSerializable
      */
     public $number;
 
-    public static function create_from_array(array $data) {
+    /**
+     * @param array $data
+     * @return IdDocument
+     * @throws \edwrodrig\contento\type\exception\InvalidEnumerationValueException
+     * @throws exception\InvalidIdDocumentNumberException
+     */
+    public static function createFromArray(array $data) {
         $r = new self;
-        $r->from_array($data);
+        $r->fromArray($data);
         return $r;
     }
 
     /**
      * @param array $data
      * @throws exception\InvalidIdDocumentNumberException
-     * @throws exception\InvalidIdDocumentTypeException
+     * @throws \edwrodrig\contento\type\exception\InvalidEnumerationValueException
      */
-    public function from_array(array $data) {
+    public function fromArray(array $data) {
         $this->type = new IdDocumentType($data['type'] ?? '');
 
         $this->number = $this->type->validate($data['number'] ?? '');
     }
 
-    public function to_array() : array {
+    public function toArray() : array {
         return [
             'type' => $this->type,
             'number' => $this->number
         ];
     }
 
-    public function get_type() : IdDocumentType {
+    /**
+     * Get the type of the identification document
+     *
+     * For example: rut, pp, etc
+     * @return IdDocumentType
+     */
+    public function getType() : IdDocumentType {
         return $this->type;
     }
 
-    public function get_number() : string {
+    /**
+     * Get the number of the identification document
+     * @return string
+     */
+    public function getNumber() : string {
         return $this->number;
     }
 
     public function jsonSerialize() {
-        return $this->to_array();
+        return $this->toArray();
     }
 
 

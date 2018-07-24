@@ -103,6 +103,55 @@ class Collection implements Countable, IteratorAggregate
         return $this->elements[$offset];
     }
 
+
+    /**
+     * Create filtered collection
+     *
+     * @param $filter
+     * @return Collection
+     */
+    public function createFiltered($filter) : Collection {
+        $collection = new self;
+        $collection->elements = array_filter($this->elements, $filter);
+        $collection->class_name = $this->class_name;
+        return $collection;
+    }
+
+    /**
+     * Split the elements of this collection
+     *
+     * Creates a associative array with collections. Each element is inserted in every collection that matches the filter function
+     *
+     * Callback function must return an string or an array of string corresponding to the collection where the element belong. A element may belong yo more than one collection.
+     * @param $filter callable a callback function
+     * @return Collection[]
+     */
+    public function createOrganized(callable $filter) : array {
+        /** @var $result Collection[] */
+        $result = [];
+
+        foreach ( $this->elements as $element ) {
+
+
+            $keys = $filter($element);
+
+            if ( is_string($keys) )
+                $keys = [$keys];
+
+            foreach ( $keys as $key ) {
+                if (!isset($result[$key])) {
+                    $collection = new self;
+                    $collection->class_name = $this->class_name;
+                    $result[$key] = $collection;
+                }
+
+                $result[$key]->elements[$element->getId()] = $element;
+            }
+        }
+
+        return $result;
+    }
+
     /**
      * @param Element[] $elements
      * @return Collection
