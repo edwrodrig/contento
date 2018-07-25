@@ -138,6 +138,10 @@ class Collection implements Countable, IteratorAggregate
             if ( is_string($keys) )
                 $keys = [$keys];
 
+            if ( count($keys) == 0 ) {
+                $keys = ['without classification'];
+            }
+
             foreach ( $keys as $key ) {
                 if (!isset($result[$key])) {
                     $collection = new self;

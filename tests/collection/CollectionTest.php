@@ -156,4 +156,30 @@ class CollectionTest extends TestCase
         $this->assertEquals(3, count($organized_collection['all']));
 
     }
+
+    public function testCreateOrganized3() {
+        $data = [
+            CollectionElement::createFromArray([
+                'id' => '0',
+                'name' => 'edwin'
+            ]),
+            CollectionElement::createFromArray([
+                'id' => '1',
+                'name' => 'edgar'
+            ]),
+            CollectionElement::createFromArray([
+                'id' => '2',
+                'name' => 'amanda'
+            ])
+        ];
+
+        $collection = Collection::createFromElements($data);
+
+        $organized_collection = $collection->createOrganized(function(CollectionElement $element) { return $element->name[0] == 'e' ? 'e' : []; });
+
+        $this->assertEquals(2, count($organized_collection));
+        $this->assertEquals(2, count($organized_collection['e']));
+        $this->assertEquals(1, count($organized_collection['without classification']));
+
+    }
 }
