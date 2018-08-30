@@ -25,7 +25,6 @@ class DefaultElement
      */
     private $data;
 
-
     /**
      * Constructor from array.
      *
