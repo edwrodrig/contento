@@ -156,7 +156,7 @@ class Collection
 
         foreach ( $result as $data) {
             /** @noinspection PhpUndefinedMethodInspection */
-            $elements[] = $class::createFromArray($this, $data);
+            $elements[] = $class::createFromArray($data);
         }
         return $elements;
     }
@@ -181,6 +181,59 @@ class Collection
             ]
         ]));
     }
+
+    /**
+     * Get files collection.
+     *
+     * This not retrieve the image data just the reference to the file and other id data.
+     * @param string $class
+     * @return array An array with image elements
+     */
+    public function getFiles(string $class = DefaultElement::class) : array
+    {
+        $result = file_get_contents($this->end_point, false, stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/json\r\n",
+                'content' => json_encode([
+                    'action' => 'file_by',
+                    'session' => $this->session
+                ])
+            ]
+        ]));
+
+        $result = json_decode($result, true)['data'];
+
+        $elements = [];
+
+        foreach ( $result as $data) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            $elements[] = $class::createFromArray($data);
+        }
+        return $elements;
+    }
+
+    /**
+     * Get the image data.
+     *
+     * Get the actual image data
+     * @param string $id
+     * @return string
+     */
+    public function getFile(string $id) : string {
+        return file_get_contents($this->end_point, false, stream_context_create([
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/json\r\n",
+                'content' => json_encode([
+                    'action' => 'file_by_id',
+                    'id' => $id,
+                    'session' => $this->session
+                ])
+            ]
+        ]));
+    }
+
 
     /**
      * Get an singleton element
