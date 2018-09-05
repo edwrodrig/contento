@@ -41,6 +41,9 @@ class CollectionTest extends TestCase
         $this->assertEquals(2, count($collection));
         $this->assertEquals('edwin', $collection->getElement('0')->name);
         $this->assertEquals('edgar', $collection->getElement('1')->name);
+        $this->assertNull($collection->getElementOrDefault('2'));
+        $this->assertNull($collection->getElementOrDefault('2', null));
+        $this->assertEquals('hola', $collection->getElementOrDefault('2', 'hola'));
 
         $array = iterator_to_array($collection);
         $this->assertEquals(['0', '1'], array_keys($array));

@@ -103,6 +103,22 @@ class Collection implements Countable, IteratorAggregate
         return $this->elements[$offset];
     }
 
+    /**
+     * Get an element by key or default
+     *
+     * Is the same as {@see Collection::getElement()} but with a fallback default value
+     * The key coincide with the element {@see Element::getId() id}
+     * @param string $offset
+     * @param null $default
+     * @return mixed|null
+     */
+    public function getElementOrDefault(string $offset, $default = null) {
+        if ( isset($this->elements[$offset]) )
+            return $this->elements[$offset];
+        else
+            return $default;
+    }
+
 
     /**
      * Create filtered collection
