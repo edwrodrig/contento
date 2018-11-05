@@ -9,12 +9,19 @@ declare(strict_types=1);
 
 namespace edwrodrig\contento\type;
 
+use edwrodrig\contento\collection\Collection;
 use JsonSerializable;
 
-class Reference implements JsonSerializable
+abstract class Reference implements JsonSerializable
 {
+    /**
+     * @var string
+     */
     private $ref;
 
+    /**
+     * @var string
+     */
     private $type;
 
     public function __construct(string $type, string $ref) {
@@ -32,5 +39,11 @@ class Reference implements JsonSerializable
 
     public function jsonSerialize() {
         return $this->ref;
+    }
+
+    abstract public static function getCollection() : Collection;
+
+    public function getElement() {
+        return static::getCollection()->getElement($this->getRef());
     }
 }

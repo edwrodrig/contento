@@ -119,6 +119,9 @@ class Collection implements Countable, IteratorAggregate
             return $default;
     }
 
+    public function getClassName() : string {
+        return $this->class_name;
+    }
 
     /**
      * Create filtered collection

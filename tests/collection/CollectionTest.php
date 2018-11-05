@@ -4,23 +4,7 @@ namespace test\edwrodrig\contento\collection;
 
 use edwrodrig\contento\collection\Collection;
 use PHPUnit\Framework\TestCase;
-
-class CollectionElement {
-    public static function createFromArray(array $data) {
-        $o = new self;
-        $o->id = $data['id'];
-        $o->name = $data['name'];
-        return $o;
-    }
-
-    public function getId() : string {
-        return $this->id;
-    }
-
-    public static function compare($a, $b) {
-        return $a->id <=> $b->id;
-    }
-}
+use test\edwrodrig\contento\CollectionElement;
 
 class CollectionTest extends TestCase
 {
