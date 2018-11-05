@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace test\edwrodrig\contento;
 
-use edwrodrig\contento\collection\Collection;
 use edwrodrig\contento\type\DefaultElement;
 use edwrodrig\contento\type\Reference;
 
@@ -23,9 +22,5 @@ class DefaultReference extends Reference {
 
     public function __construct(string $id) {
         parent::__construct('default', $id);
-    }
-
-    public static function getCollection() : Collection {
-        return self::$collection;
     }
 };

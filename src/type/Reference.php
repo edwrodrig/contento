@@ -41,7 +41,13 @@ abstract class Reference implements JsonSerializable
         return $this->ref;
     }
 
-    abstract public static function getCollection() : Collection;
+    public static function setCollection(Collection $collection) {
+        static::$collection = $collection;
+    }
+
+    public static function getCollection() : Collection {
+        return static::$collection;
+    }
 
     public function getElement() {
         return static::getCollection()->getElement($this->getRef());

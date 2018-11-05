@@ -29,7 +29,7 @@ class ReferenceSetTest extends TestCase
 
         $collection = Collection::createFromArray($data);
 
-        DefaultReference::$collection = $collection;
+        DefaultReference::setCollection($collection);
 
         $set = DefaultReferenceSet::createFromArray(['hola', 'chao']);
 
