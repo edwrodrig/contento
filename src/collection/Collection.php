@@ -130,7 +130,7 @@ class Collection implements Countable, IteratorAggregate
      * @return Collection
      */
     public function createFiltered($filter) : Collection {
-        $collection = new self;
+        $collection = new static;
         $collection->elements = array_filter($this->elements, $filter);
         $collection->class_name = $this->class_name;
         return $collection;
@@ -163,7 +163,7 @@ class Collection implements Countable, IteratorAggregate
 
             foreach ( $keys as $key ) {
                 if (!isset($result[$key])) {
-                    $collection = new self;
+                    $collection = new static;
                     $collection->class_name = $this->class_name;
                     $result[$key] = $collection;
                 }
