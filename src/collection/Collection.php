@@ -179,8 +179,8 @@ class Collection implements Countable, IteratorAggregate
      * @param Element[] $elements
      * @return Collection
      */
-    public static function createFromElements(array $elements) : self {
-        $r = new self;
+    public static function createFromElements(array $elements) {
+        $r = new static;
         $last_element = null;
         foreach ( $elements as $element ) {
             $r->elements[$element->getId()] = $element;
@@ -194,13 +194,23 @@ class Collection implements Countable, IteratorAggregate
         return $r;
     }
 
-    public static function createFromArray(array $elements, string $class = DefaultElement::class) : self {
-        $r = new self;
+    /**
+     * @param array $elements
+     * @param string $class
+     * @return Collection
+     */
+    public static function createFromArray(array $elements, string $class = DefaultElement::class)  {
+        $r = new static;
         $r->fromArray($elements, $class);
         return $r;
     }
 
-    public static function createFromJson(string $filename, string $class = DefaultElement::class) : self {
+    /**
+     * @param string $filename
+     * @param string $class
+     * @return Collection
+     */
+    public static function createFromJson(string $filename, string $class = DefaultElement::class)  {
         $elements = json_decode(file_get_contents($filename), true);
 
         return self::createFromArray($elements, $class);
