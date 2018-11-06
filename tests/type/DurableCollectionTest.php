@@ -21,9 +21,8 @@ class DurableCollectionTest extends \PHPUnit\Framework\TestCase
         /**
          * @var DurableCollection
          */
-        $collection = new class implements ArrayAccess, Countable
+        $collection = new class extends DurableCollection
         {
-            use DurableCollection;
 
             public function __construct() {
                 $this->elements = [

@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace edwrodrig\contento\type;
 
+use ArrayAccess;
 use ArrayIterator;
+use Countable;
 use DateTime;
+use IteratorAggregate;
 
 /**
  * Trait DurableCollection
@@ -13,7 +16,7 @@ use DateTime;
  * Every study has a duration so the education of a person as a set of study is a durable collection
  * @package edwrodrig\contento\type
  */
-trait DurableCollection
+class DurableCollection implements IteratorAggregate, ArrayAccess, Countable
 {
     /**
      * The durable elements
