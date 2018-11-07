@@ -119,6 +119,10 @@ class Collection implements Countable, IteratorAggregate
             return $default;
     }
 
+    /**
+     * Get the class name of the object in this collection
+     * @return string
+     */
     public function getClassName() : string {
         return $this->class_name;
     }
@@ -176,6 +180,16 @@ class Collection implements Countable, IteratorAggregate
     }
 
     /**
+     * Add an element to the list
+     * @param $element
+     * @return mixed
+     */
+    public function addElement($element) {
+        $this->elements[$element->getId()] = $element;
+        return $element;
+    }
+
+    /**
      * @param Element[] $elements
      * @return Collection
      */
@@ -183,8 +197,7 @@ class Collection implements Countable, IteratorAggregate
         $r = new static;
         $last_element = null;
         foreach ( $elements as $element ) {
-            $r->elements[$element->getId()] = $element;
-            $last_element = $element;
+            $last_element = $r->addElement($element);
         }
 
         if ( !is_null($last_element) ) {
