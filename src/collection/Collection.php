@@ -25,19 +25,19 @@ class Collection implements Countable, IteratorAggregate
 
     /**
      * The class name of the element of this collection
-     * @var string
+     * @var string|null
      */
-    private $class_name;
+    private $class_name = null;
 
 
     /**
      * Collection constructor.
      */
-    protected function __construct() {
+    public function __construct() {
         $this->elements = [];
     }
 
-    protected function fromArray(array $data, string $class_name) {
+    public function fromArray(array $data, string $class_name) {
         $this->class_name = $class_name;
 
         foreach ( $data as $element ) {
@@ -61,8 +61,9 @@ class Collection implements Countable, IteratorAggregate
      * @see Collection::reverseSort() to order in reverse order
      */
     public function sort() : Collection {
-        if ( method_exists($this->class_name, 'compare') )
-            uasort($this->elements, function($a, $b) { return ($this->class_name)::compare($a, $b); });
+        $class_name = $this->getClassName();
+        if ( method_exists($class_name, 'compare') )
+            uasort($this->elements, function($a, $b) use ($class_name) { return ($class_name)::compare($a, $b); });
         else
             ksort($this->elements);
 
@@ -76,8 +77,9 @@ class Collection implements Countable, IteratorAggregate
      * @see Collection::reverseSort() to order in normal order
      */
     public function reverseSort() : Collection {
-        if ( method_exists($this->class_name, 'compare') )
-            uasort($this->elements, function($a, $b) { return ($this->class_name)::compare($b, $a); });
+        $class_name = $this->getClassName();
+        if ( method_exists($class_name, 'compare') )
+            uasort($this->elements, function($a, $b) use ($class_name) { return ($class_name)::compare($b, $a); });
         else
             krsort($this->elements);
 
@@ -123,7 +125,13 @@ class Collection implements Countable, IteratorAggregate
      * Get the class name of the object in this collection
      * @return string
      */
-    public function getClassName() : string {
+    public function getClassName() : ?string {
+        if ( is_null($this->class_name) ) {
+            foreach ( $this->elements as $element ) {
+                $this->class_name = get_class($element);
+                break;
+            }
+        }
         return $this->class_name;
     }
 
@@ -136,7 +144,6 @@ class Collection implements Countable, IteratorAggregate
     public function createFiltered($filter) : Collection {
         $collection = new static;
         $collection->elements = array_filter($this->elements, $filter);
-        $collection->class_name = $this->class_name;
         return $collection;
     }
 
@@ -168,11 +175,10 @@ class Collection implements Countable, IteratorAggregate
             foreach ( $keys as $key ) {
                 if (!isset($result[$key])) {
                     $collection = new static;
-                    $collection->class_name = $this->class_name;
                     $result[$key] = $collection;
                 }
 
-                $result[$key]->elements[$element->getId()] = $element;
+                $result[$key]->addElement($element);
             }
         }
 
@@ -195,13 +201,8 @@ class Collection implements Countable, IteratorAggregate
      */
     public static function createFromElements(array $elements) {
         $r = new static;
-        $last_element = null;
         foreach ( $elements as $element ) {
-            $last_element = $r->addElement($element);
-        }
-
-        if ( !is_null($last_element) ) {
-            $r->class_name = get_class($last_element);
+            $r->addElement($element);
         }
 
         return $r;
