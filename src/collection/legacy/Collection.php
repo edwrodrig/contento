@@ -226,7 +226,7 @@ class Collection
                 'method' => 'POST',
                 'header' => "Content-Type: application/json\r\n",
                 'content' => json_encode([
-                    'action' => 'file_by_id',
+                    'action' => 'file_file_by_id',
                     'id' => $id,
                     'session' => $this->session
                 ])
